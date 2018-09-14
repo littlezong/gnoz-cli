@@ -295,6 +295,15 @@ glob@^7.0.5:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+gnoz-cli@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/gnoz-cli/download/gnoz-cli-1.0.1.tgz#eb0c1c88d40ca8112ba06cf97715b7a0429134db"
+  dependencies:
+    chalk "^2.4.1"
+    commander "^2.18.0"
+    download-git-repo "^1.1.0"
+    ora "^3.0.0"
+
 got@^6.3.0:
   version "6.7.1"
   resolved "http://registry.npm.taobao.org/got/download/got-6.7.1.tgz#240cd05785a9a18e561dc1b44b41c763ef1e8db0"
