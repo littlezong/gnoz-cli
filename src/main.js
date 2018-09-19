@@ -4,9 +4,6 @@ import Vue from 'vue'
 import router from './router'
 
 // vuex
-// import Vuex from 'vuex'
-// import store from './vuex/store'
-// Vue.use(Vuex)
 
 // http
 import axios from 'axios'
