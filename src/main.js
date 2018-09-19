@@ -5,9 +5,7 @@ import router from './router'
 
 // vuex
 
-// ego
-
-// ibee
+// ui
 
 // http
 import axios from 'axios'
