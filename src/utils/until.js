@@ -9,9 +9,6 @@ const apiSlDomain = {
   default: '/'
 }
 
-const logo = 'shuguang'
-
 module.exports = {
-  apiPath,
-  logo
+  apiPath
 }

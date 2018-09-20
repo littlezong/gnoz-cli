@@ -1,14 +1,23 @@
 var router = [
   {
     path: '/',
-    redirect: '/login',
-    component: resolve => require(['@/views/index/container'], resolve)
+    redirect: '/home'
+  },
+  {
+    path: '/home',
+    name: 'home',
+    meta: {
+      title: '首页'
+    },
+    component: resolve => require(['@/views/index/home'], resolve)
   },
   {
     path: '/login',
-    title: '登录',
     name: 'login',
-    component: resolve => require(['@/views/index/login/index'], resolve)
+    meta: {
+      title: '登录页'
+    },
+    component: resolve => require(['@/views/index/login'], resolve)
   },
   {
     path: '*',
