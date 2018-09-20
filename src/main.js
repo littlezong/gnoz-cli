@@ -1,6 +1,7 @@
 // 浏览器兼容
 import 'babel-polyfill'
 import Vue from 'vue'
+import router from './router'
 
 // vuex
 
@@ -10,7 +11,6 @@ import Vue from 'vue'
 import axios from 'axios'
 
 import App from './App'
-import router from './router'
 
 // 引入 公共脚本
 import '@/utils/until.js'
