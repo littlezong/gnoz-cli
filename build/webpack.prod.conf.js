@@ -10,8 +10,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const HappyPack = require('happypack')
 
-const env = process.env.NODE_ENV === 'testing' ?
+const happypackPlugins = [
+  new HappyPack({
+    id: 'less',
+    threads: 2,
+    loaders: ['css-loader', 'postcss-loader', 'less-loader']
+  }),
+  new HappyPack({
+    id: 'css',
+    threads: 2,
+    loaders: ['css-loader', 'postcss-loader']
+  })
+]
+
+const env =
+  process.env.NODE_ENV === 'testing' ?
   require('../config/test.env') :
   require('../config/prod.env')
 
@@ -30,6 +45,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    ...happypackPlugins,
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -43,26 +59,31 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       parallel: true
     }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: require('../vendor-manifest.json')
+    // }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
-      allChunks: true,
+      allChunks: true
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap ? {
-        safe: true,
-        map: {
-          inline: false
+      cssProcessorOptions: config.build.productionSourceMap ?
+        {
+          safe: true,
+          map: {
+            inline: false
+          }
+        } :
+        {
+          safe: true
         }
-      } : {
-        safe: true
-      }
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
@@ -88,19 +109,19 @@ const webpackConfig = merge(baseWebpackConfig, {
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks(module) {
-        // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
-        )
-      }
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   minChunks(module) {
+    //     // any required modules inside node_modules are extracted to vendor
+    //     return (
+    //       module.resource &&
+    //       /\.js$/.test(module.resource) &&
+    //       module.resource.indexOf(
+    //         path.join(__dirname, '../node_modules')
+    //       ) === 0
+    //     )
+    //   }
+    // }),
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
@@ -118,11 +139,23 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     // copy custom static assets
+    // new CopyWebpackPlugin([{
+    //   from: path.resolve(__dirname, '../static'),
+    //   to: config.build.assetsSubDirectory,
+    //   ignore: ['.*']
+    // }])
+    // copy custom static assets
     new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: config.build.assetsSubDirectory,
-      ignore: ['.*']
-    }])
+        from: path.resolve(__dirname, '../src/theme'),
+        to: `${config.build.assetsSubDirectory}/theme`,
+        ignore: ['ThemePicker', 'ThemePicker/*']
+      },
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ])
   ]
 })
 
@@ -134,9 +167,7 @@ if (config.build.productionGzip) {
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
+        '\\.(' + config.build.productionGzipExtensions.join('|') + ')$'
       ),
       threshold: 10240,
       minRatio: 0.8
@@ -145,30 +176,28 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
-    analyzerPort: 8899
-  }))
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
 if (config.moduleName) {
-  let pages = utils.getMultiEntry('./src/' + config.moduleName + '/**/*.html');
+  let pages = utils.getMultiEntry('./src/' + config.moduleName + '/**/*.html')
   for (let pathname in pages) {
-    let files = pathname.split('/');
+    let files = pathname.split('/')
     let conf = {
       filename: files[files.length - 1] + '.html',
       template: pages[pathname], // 模板路径
       chunks: ['app', 'manifest', 'vendor', pathname], // 每个html引用的js模块
       inject: true, // js插入位置
       hash: true
-    };
+    }
 
-    webpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
+    webpackConfig.plugins.push(new HtmlWebpackPlugin(conf))
   }
 } else {
   let conf = {
-    filename: process.env.NODE_ENV === 'testing' ?
-      'index.html' : config.build.index,
+    filename: process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
     template: 'index.html',
     inject: true,
     minify: {
@@ -177,8 +206,8 @@ if (config.moduleName) {
       removeAttributeQuotes: true,
       chunksSortMode: 'dependency'
     }
-  };
-  webpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
+  }
+  webpackConfig.plugins.push(new HtmlWebpackPlugin(conf))
 }
 
 module.exports = webpackConfig

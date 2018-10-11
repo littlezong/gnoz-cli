@@ -8,16 +8,13 @@
     }],
     "stage-2"
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime", ["component", {
+  "plugins": ["transform-vue-jsx", "transform-runtime", [
+    "component",
+    {
       "libraryName": "element-ui",
-      "styleLibraryName": "theme-chalk",
-      "style": true
-    }, "element-ui"],
-    ["component", {
-      "libraryName": "do1-ui",
-      "styleLibraryName": "theme-default"
-    }, "do1-ui"]
-  ],
+      "styleLibraryName": "theme-chalk"
+    }
+  ]],
   "env": {
     "test": {
       "presets": ["env", "stage-2"],

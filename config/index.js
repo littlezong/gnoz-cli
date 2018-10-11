@@ -14,15 +14,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: 'http://68.29.48.25:8081/', // 省厅
-        // target: 'http://139.199.201.51:8090/', // 测试服
-        // target: 'http://10.10.0.53:8090/', // 剑锋本地
-        // target: 'http://119.29.247.167:8084/', // 腾讯云
-        // target: 'http://10.10.0.57:8090/', // 楚雄本地
-        // target: 'http://10.10.1.75:8090/', // 海斌本地
-        target: 'http://139.199.65.139:8090/', // 新测试服务器
-        // target: 'http://10.10.0.76:8090/', // 雨男本地
-        // target: 'http://139.199.201.51:8090/',
+        target: 'http://139.199.201.51:8090/', // test
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
@@ -32,7 +24,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 8085, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8010, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -74,8 +66,7 @@ module.exports = {
     /**
      * Source Maps
      */
-
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
@@ -90,6 +81,6 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report || true
+    bundleAnalyzerReport: process.env.npm_config_report
   }
 }

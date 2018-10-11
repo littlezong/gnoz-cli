@@ -24,12 +24,12 @@ export default {
           theme: 'default'
         },
         {
-          name: '黑色金属',
+          name: '切换黑色',
           color: '#000000',
           theme: 'dark'
         },
         {
-          name: '大橘为重',
+          name: '切换橙色',
           color: '#ff8000',
           theme: 'orange'
         }

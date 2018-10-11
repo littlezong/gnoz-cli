@@ -1,15 +1,20 @@
 <template>
   <div class="home">
-    <h1>官网首页</h1>
-    <router-link :to="{ name: 'login'}">
-      <dy-button size="large"
-        type="primary">跳转登录页</dy-button>
-    </router-link>
-    <router-link :to="{ name: 'adminHome'}">
-      <dy-button size="large"
-        type="primary">跳转后台首页</dy-button>
-    </router-link>
-  </div>
+    <div class="home-logo">
+      <img src="@/assets/images/login_logo.png" />
+    </div>
+      <h1>官网首页</h1>
+      <div class="home-content">
+        <p>
+          <router-link :to="{ name: 'adminHome'}">跳转后台首页
+          </router-link>
+        </p>
+      </div>
+      <h1>换肤功能</h1>
+      <div class="home-content">
+        <ThemePicker></ThemePicker>
+      </div>
+    </div>
 </template>
 
 <style lang="less">
@@ -17,15 +22,17 @@
 </style>
 
 <script type="text/ecmascript-6">
+import ThemePicker from '@/theme/ThemePicker'
 export default {
+  components: {
+    ThemePicker
+  },
   data() {
     return {}
   },
   methods: {
     // 初始化
-    init: function() {
-      console.log(this.$route)
-    }
+    init: function() {}
   },
   created() {
     this.init()

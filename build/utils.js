@@ -4,10 +4,11 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 const glob = require('glob')
-const fs = require('fs');
+const fs = require('fs')
 
 exports.assetsPath = function (_path) {
-  const assetsSubDirectory = process.env.NODE_ENV === 'production' ?
+  const assetsSubDirectory =
+    process.env.NODE_ENV === 'production' ?
     config.build.assetsSubDirectory :
     config.dev.assetsSubDirectory
 
@@ -35,7 +36,10 @@ exports.cssLoaders = function (options) {
   const sassResourcesLoader = {
     loader: 'sass-resources-loader',
     options: {
-      resources: [path.resolve(__dirname, '../src/assets/style/common/basic.less')]
+      resources: [
+        path.resolve(__dirname, '../src/assets/style/common/basic.less')
+      ],
+      publicPath: '/'
     }
   }
 
@@ -48,10 +52,13 @@ exports.cssLoaders = function (options) {
         return
       }
       let _pair = item.split(':')
-      if (_pair.length < 2) return;
+      if (_pair.length < 2) return
       let key = _pair[0].replace('\r', '').replace('@', '')
-      if (!key) return;
-      let value = _pair[1].replace(';', '').replace('\r', '').replace(/^\s+|\s+$/g, '')
+      if (!key) return
+      let value = _pair[1]
+        .replace(';', '')
+        .replace('\r', '')
+        .replace(/^\s+|\s+$/g, '')
       variables[key] = value
     })
     return variables
@@ -60,19 +67,27 @@ exports.cssLoaders = function (options) {
   // generate loader string to be used with extract text plugin
   function generateLoaders(loader, loaderOptions) {
     let isLess = loader === 'less'
-    const theme = config.theme ? path.resolve(__dirname, '../src/assets/style/theme/' + config.theme + '.less') : null
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+    const theme = config.theme ?
+      path.resolve(
+        __dirname,
+        '../src/assets/style/theme/' + config.theme + '.less'
+      ) :
+      null
+    const loaders = options.usePostCSS ?
+      [cssLoader, postcssLoader] :
+      [cssLoader]
 
     if (loader) {
       if (isLess && theme) {
         loaderOptions = {
-          "modifyVars": getLessVariables(theme)
+          modifyVars: getLessVariables(theme)
         }
       }
       loaders.push({
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
+          sourceMap: options.sourceMap,
+          publicPath: '/'
         })
       })
     }
@@ -122,7 +137,8 @@ exports.styleLoaders = function (options) {
     const loader = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
-      use: loader
+      // use: loader
+      use: loader === 'less' ? `happypack/loader?id=${extension}` : loader
     })
   }
 
@@ -150,27 +166,29 @@ exports.createNotifierCallback = () => {
 //获取多级的入口文件
 exports.getMultiEntry = function (globPath) {
   let entries = {},
-    basename, tmp, pathname;
+    basename,
+    tmp,
+    pathname
 
   glob.sync(globPath).forEach(function (entry) {
-    basename = path.basename(entry, path.extname(entry));
+    basename = path.basename(entry, path.extname(entry))
     // 以entry为入口点关键词
     if (basename.indexOf('entry') > -1) {
-      let temp = basename.split('-');
-      basename = temp[temp.length - 1];
+      let temp = basename.split('-')
+      basename = temp[temp.length - 1]
     }
 
-    tmp = entry.split('/').splice(-4);
+    tmp = entry.split('/').splice(-4)
     // console.log(entry, tmp, basename);
-    let pathsrc = tmp[0] + '/' + tmp[1];
+    let pathsrc = tmp[0] + '/' + tmp[1]
     if (tmp[0] == 'src') {
-      pathsrc = tmp[1];
+      pathsrc = tmp[1]
     }
     //console.log(pathsrc)
-    pathname = pathsrc + '/' + basename; // 正确输出js和html的路径
-    entries[pathname] = entry;
+    pathname = pathsrc + '/' + basename // 正确输出js和html的路径
+    entries[pathname] = entry
     // console.log(pathname + '-----------' + entry);
-  });
+  })
 
-  return entries;
+  return entries
 }

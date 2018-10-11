@@ -1,10 +1,14 @@
 <template>
   <div class="home">
+    <div class="home-logo">
+      <img src="@/assets/images/login_logo.png" />
+    </div>
     <h1>后台首页</h1>
-    <router-link :to="{ name: 'home'}">
-      <dy-button size="large"
-        type="primary">返回官网首页</dy-button>
-    </router-link>
+    <div class="home-content">
+      <router-link :to="{ name: 'home'}">
+        返回官网首页
+      </router-link>
+    </div>
   </div>
 </template>
 
