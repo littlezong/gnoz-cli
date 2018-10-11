@@ -4,8 +4,6 @@
 
 > `vue` + `vue-router` + `vuex`（vue 全家桶）
 
-> `element-ui`（已配置按需加载）
-
 > `axios`（提供 api 请求操作）
 
 > `js-md5` （提供 MD5 哈希函数）
@@ -74,36 +72,36 @@
 │ package.json
 │ README.md
 │ yarn.lock
-│  
+│
 ├─build
-│  
+│
 ├─config
-│  
+│
 ├─src
 │ │ App.vue
 │ │ main.js
-│ │  
+│ │
 │ ├─api
-│ │  
+│ │
 │ ├─assets  // 资源文件
 │ │ ├─icon
-│ │ │  
+│ │ │
 │ │ ├─images
-│ │ │  
+│ │ │
 │ │ └─style
-│ │  
-│ ├─components  
+│ │
+│ ├─components
 │ │ ├─Example // 组件统一大写字母开头？
 │ │ │ index.less  // 组件样式
 │ │ │ index.vue // 组件主入口
 │ │ │ install.js  // 提供vue组件注册
-│ │ │  
+│ │ │
 │ │ └─...
-│ │  
+│ │
 │ ├─directives  // 指令
-│ │  
+│ │
 │ ├─router  // 路由
-│ │  
+│ │
 │ ├─theme // 主题（内置主题切换功能）
 │ │ │ default.less  // 通用颜色样式设置
 │ │ │ dark.less // dark主题
@@ -111,20 +109,20 @@
 │ │ │ ...others theme
 │ │
 │ ├─utils   // 工具
-│ │  
+│ │
 │ ├─views
 │ │ └─example // 页面
 │ │ │ index.less  // 页面样式
 │ │ │ index.vue // 提供入口
 │ │ │ ...others template
-│ │ │  
+│ │ │
 │ │ └─...
-│ │  
+│ │
 │ └─vuex
-│  
+│
 ├─static
-│ │ │  
+│ │ │
 │ │ └─...
-│  
+│
 └─test
 ```
