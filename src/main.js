@@ -3,18 +3,17 @@
 // 浏览器兼容
 import 'babel-polyfill'
 import Vue from 'vue'
-import router from './router'
+
+// vuex
+
+// ui
+
 import axios from 'axios'
+import router from './router'
 // 引入 公共脚本
 import '@/utils/until.js'
 
 import App from './App'
-
-// ui
-
-// vuex
-
-Vue.use(Vuex)
 
 // 关闭提示
 Vue.config.productionTip = false
