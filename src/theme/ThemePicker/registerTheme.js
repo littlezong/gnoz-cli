@@ -9,6 +9,14 @@ export function registerTheme(theme, save = true) {
   let existedTheme = document.getElementById('theme')
   let bodyTag = document.getElementsByTagName('body')[0]
   if (existedTheme) {
+    let target = existedTheme.target
+    if (theme === target) return
+    let styles = document.getElementsByTagName('style')
+    for (let i = 0; i < styles.length; i++) {
+      if (styles[i].id) {
+        styles[i].parentNode.removeChild(styles[i])
+      }
+    }
     bodyTag.removeChild(existedTheme)
   }
   if (theme && theme !== 'default') {
@@ -17,6 +25,7 @@ export function registerTheme(theme, save = true) {
     themeLink.rel = 'stylesheet/less'
     themeLink.type = 'text/css'
     themeLink.href = `static/theme/${theme}.less`
+    themeLink.target = theme
     bodyTag.appendChild(themeLink)
     new Promise(resolve => {
       if (!less) {

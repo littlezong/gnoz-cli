@@ -39,14 +39,14 @@ export default {
   },
   methods: {
     changeTheme(theme) {
-      if (theme === this.currentTheme) return
-      this.currentTheme = theme
-      let styles = document.getElementsByTagName('style')
-      for (let i = 0; i < styles.length; i++) {
-        if (styles[i].id) {
-          styles[i].parentNode.removeChild(styles[i])
-        }
-      }
+      // if (theme === this.currentTheme) return
+      // this.currentTheme = theme
+      // let styles = document.getElementsByTagName('style')
+      // for (let i = 0; i < styles.length; i++) {
+      //   if (styles[i].id) {
+      //     styles[i].parentNode.removeChild(styles[i])
+      //   }
+      // }
       registerTheme(theme)
     }
   }
